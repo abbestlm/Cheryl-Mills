@@ -37,6 +37,7 @@
             --oxblood-bright: #9c3140;
             --brass: #b6905a;
             --brass-bright: #d1ad78;
+            --seal-wax: #5c1620;
             --hairline-dark: rgba(233, 225, 208, 0.14);
             --hairline-light: rgba(30, 26, 23, 0.14);
 
@@ -134,6 +135,33 @@
             border-radius: 50%;
             background: currentColor;
             opacity: 0.85;
+            animation: flicker 3.6s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 0.85;
+            }
+
+            46% {
+                opacity: 0.5;
+            }
+
+            52% {
+                opacity: 0.95;
+            }
+
+            74% {
+                opacity: 0.6;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .eyebrow .rivet {
+                animation: none;
+            }
         }
 
         h1,
@@ -183,21 +211,37 @@
             opacity: 0.55;
         }
 
-        .hinge-seam::after {
-            content: '';
+        .hinge-seam .seal {
             position: absolute;
             left: 50%;
             top: 50%;
-            width: 9px;
-            height: 9px;
-            transform: translate(-50%, -50%) rotate(45deg);
-            background: var(--brass);
-            box-shadow: 0 0 0 3px var(--void), 0 0 14px rgba(182, 144, 90, 0.5);
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 600;
+            font-size: 0.86rem;
+            letter-spacing: 0.02em;
+            color: rgba(233, 225, 208, 0.82);
+            background: radial-gradient(circle at 34% 28%, var(--oxblood-bright), var(--seal-wax) 72%);
+            box-shadow:
+                0 0 0 3px var(--void),
+                0 6px 16px -4px rgba(0, 0, 0, 0.6),
+                inset 0 1px 2px rgba(255, 255, 255, 0.18),
+                inset 0 -3px 5px rgba(0, 0, 0, 0.45);
         }
 
-        .hinge-seam.on-light::after {
-            box-shadow: 0 0 0 3px var(--parchment), 0 0 14px rgba(124, 37, 49, 0.35);
-            background: var(--oxblood);
+        .hinge-seam.on-light .seal {
+            box-shadow:
+                0 0 0 3px var(--parchment),
+                0 6px 16px -4px rgba(30, 26, 23, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.18),
+                inset 0 -3px 5px rgba(0, 0, 0, 0.45);
         }
 
         /* buttons */
@@ -461,8 +505,7 @@
 
         .locket-frame {
             width: 100%;
-            max-width: 340px;
-            aspect-ratio: 3 / 4;
+            max-width: 400px;
             position: relative;
             display: flex;
             align-items: center;
@@ -470,8 +513,10 @@
         }
 
         .locket-art {
-            width: 92%;
-            height: auto;
+            width: 400px;
+            height: 540px;
+            display: block;
+            object-fit: contain;
         }
 
         .locket-art .lid {
@@ -521,6 +566,20 @@
         #about.grain::before {
             mix-blend-mode: multiply;
             opacity: 0.06;
+        }
+
+        #about::after,
+        #services::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle at 9% 24%, rgba(124, 37, 49, 0.05), transparent 12%),
+                radial-gradient(circle at 93% 12%, rgba(85, 80, 63, 0.06), transparent 11%),
+                radial-gradient(circle at 16% 84%, rgba(124, 37, 49, 0.04), transparent 14%),
+                radial-gradient(circle at 89% 76%, rgba(85, 80, 63, 0.05), transparent 11%),
+                radial-gradient(circle at 55% 46%, rgba(85, 80, 63, 0.03), transparent 18%);
         }
 
         .about-grid {
@@ -586,6 +645,55 @@
             object-position: center top;
         }
 
+        /* engraved corner flourishes, used on framed imagery */
+        .corner-flourish {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .corner-flourish .cf {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            overflow: visible;
+        }
+
+        .corner-flourish .cf path {
+            fill: none;
+            stroke: var(--brass-bright);
+            opacity: 0.6;
+        }
+
+        .corner-flourish .cf circle {
+            fill: var(--brass-bright);
+            opacity: 0.6;
+        }
+
+        .corner-flourish .cf-tl {
+            top: 12px;
+            left: 12px;
+        }
+
+        .corner-flourish .cf-tr {
+            top: 12px;
+            right: 12px;
+            transform: scaleX(-1);
+        }
+
+        .corner-flourish .cf-bl {
+            bottom: 12px;
+            left: 12px;
+            transform: scaleY(-1);
+        }
+
+        .corner-flourish .cf-br {
+            bottom: 12px;
+            right: 12px;
+            transform: scale(-1, -1);
+        }
+
         .about-copy h2 {
             font-size: clamp(2rem, 3.2vw, 2.7rem);
             margin-bottom: 28px;
@@ -596,6 +704,19 @@
             font-size: 1.05rem;
             margin-bottom: 20px;
             max-width: 64ch;
+        }
+
+        .about-copy p.drop-cap::first-letter {
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 600;
+            font-size: 3.6em;
+            line-height: 0.7;
+            float: left;
+            padding-top: 8px;
+            padding-right: 12px;
+            padding-bottom: 2px;
+            color: var(--oxblood);
         }
 
         .about-signature {
@@ -646,7 +767,9 @@
 
         /* ============ CHRONICLES (dark chapter) ============ */
         #books {
-            background: var(--void);
+            background:
+                radial-gradient(ellipse 130% 85% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.4) 100%),
+                var(--void);
             padding: 130px 0;
         }
 
@@ -827,7 +950,7 @@
 
         .field-notes {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 26px;
         }
 
@@ -864,6 +987,25 @@
             font-size: 0.96rem;
         }
 
+        .field-note .price {
+            display: inline-block;
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid var(--hairline-light);
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--oxblood);
+            width: 100%;
+        }
+
+        .field-note .price span {
+            display: block;
+            margin-top: 2px;
+            font-weight: 500;
+            font-size: 0.78rem;
+            color: var(--paper-muted);
+        }
+
         .service-icon {
             width: 44px;
             height: 44px;
@@ -888,7 +1030,9 @@
 
         /* ============ CONTACT (dark chapter) ============ */
         #contact {
-            background: var(--void);
+            background:
+                radial-gradient(ellipse 130% 85% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.4) 100%),
+                var(--void);
             padding: 130px 0;
         }
 
@@ -1154,8 +1298,7 @@
     </header>
 
     <main>
-
-        <!-- ============ HOME / HERO ============ -->
+        <!-- ============ HOME ============ -->
         <section id="home" class="grain">
             <div class="wrap hero-grid">
                 <div class="hero-copy">
@@ -1179,26 +1322,13 @@
 
                 <div class="hero-locket-wrap">
                     <div class="locket-frame">
-                        <svg class="locket-art" viewBox="0 0 260 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="130" cy="180" rx="92" ry="108" stroke="#b6905a" stroke-width="1.4"
-                                opacity="0.9" />
-                            <ellipse cx="130" cy="180" rx="76" ry="90" stroke="#b6905a" stroke-width="0.7"
-                                opacity="0.4" />
-                            <path d="M130 66V40" stroke="#b6905a" stroke-width="1.4" stroke-linecap="round" />
-                            <rect x="112" y="18" width="36" height="22" rx="4" stroke="#b6905a" stroke-width="1.4" />
-                            <g class="lid" style="transform-box: fill-box;">
-                                <path d="M38 178C38 118 78 76 130 76C182 76 222 118 222 178" stroke="#9c3140"
-                                    stroke-width="1.6" opacity="0.85" />
-                                <path d="M130 76V150" stroke="#9c3140" stroke-width="1" opacity="0.5"
-                                    stroke-dasharray="2 4" />
-                            </g>
-                            <text x="130" y="195" text-anchor="middle" font-family="Cormorant Garamond, serif"
-                                font-style="italic" font-size="22" fill="#e9e1d0" opacity="0.7">C · M</text>
-                        </svg>
+                        <img class="locket-art" src="locketchro.png" alt="The Secret Locket">
                     </div>
-                    <div class="hero-caption">The Secret Locket — Out Now</div>
+
+                    <div class="hero-caption">
+                        The Secret Locket — Out Now
+                    </div>
                 </div>
-            </div>
         </section>
 
         <div class="hinge-seam"></div>
@@ -1209,12 +1339,35 @@
                 <div class="portrait-wrap">
                     <div class="portrait">
                         <img src="author.png" alt="Cheryl Mills, author" class="portrait-img">
+                        <div class="corner-flourish" aria-hidden="true">
+                            <svg class="cf cf-tl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-tr" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-bl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-br" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
                 <div class="about-copy">
                     <span class="eyebrow"><span class="rivet"></span>About the Author</span>
                     <h2>Cheryl Mills</h2>
-                    <p>Cheryl Mills is a British author drawn to the darker side of human nature. Her novels move
+                    <p class="drop-cap">Cheryl Mills is a British author drawn to the darker side of human nature. Her
+                        novels move
                         fluidly between psychological crime thriller and supernatural gothic horror, built around
                         atmospheric, slow-burning suspense that explores grief, fear, obsession, and the unknown — the
                         things we inherit, and the things that refuse to stay buried.</p>
@@ -1258,7 +1411,7 @@
             </div>
         </section>
 
-        <div class="hinge-seam on-light"></div>
+        <div class="hinge-seam on-light"><span class="seal">II</span></div>
 
         <!-- ============ THE LOCKET CHRONICLES ============ -->
         <section id="books">
@@ -1274,6 +1427,28 @@
                 <div class="book-entry">
                     <div class="book-cover vol-1">
                         <img src="locket.png" alt="The Secret Locket book cover" class="book-cover-img">
+                        <div class="corner-flourish" aria-hidden="true">
+                            <svg class="cf cf-tl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-tr" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-bl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-br" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                        </div>
                     </div>
                     <div class="book-copy">
                         <span class="eyebrow"><span class="rivet"></span>Book One · Out Now</span>
@@ -1296,12 +1471,10 @@
                         <div class="retail-row">
                             <a href="https://www.amazon.ca/dp/B0GDJF756C" class="retail-btn" target="_blank"
                                 rel="noopener noreferrer">Amazon</a>
-                            <a href="https://books.apple.com" class="retail-btn" target="_blank"
-                                rel="noopener noreferrer">Apple Books</a>
-                            <a href="https://www.barnesandnoble.com" class="retail-btn" target="_blank"
-                                rel="noopener noreferrer">Barnes &amp; Noble</a>
-                            <a href="https://www.everand.com" class="retail-btn" target="_blank"
-                                rel="noopener noreferrer">Everand</a>
+                            <a href="https://www.barnesandnoble.com/w/the-secret-locket-cheryl-mills/1149956704?ean=2940196043352"
+                                class="retail-btn" target="_blank" rel="noopener noreferrer">Barnes &amp; Noble</a>
+                            <a href="https://www.everand.com/book/1029695340/The-Secret-Locket-The-Secret-Locket-Series-1?_gl=1*zf0so*_up*MQ..*_ga*MTcxNTg4NDk1Ni4xNzg0MDQ2OTcy*_ga_DVE36KXX3G*czE3ODQwNDY5NzEkbzEkZzAkdDE3ODQwNDY5NzEkajYwJGwwJGgw"
+                                class="retail-btn" target="_blank" rel="noopener noreferrer">Everand</a>
                         </div>
                     </div>
                 </div>
@@ -1317,17 +1490,45 @@
                         </svg>
                         <h3>The Shadows in the Locket</h3>
                         <span class="cover-author">Cheryl Mills</span>
+                        <div class="corner-flourish" aria-hidden="true">
+                            <svg class="cf cf-tl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-tr" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-bl" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                            <svg class="cf cf-br" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 19V10Q5 5 10 5H19" stroke-width="1" />
+                                <path d="M5 14Q5 9 10 9" stroke-width="0.75" />
+                                <circle cx="5" cy="5" r="1.3" />
+                            </svg>
+                        </div>
                     </div>
                     <div class="book-copy">
                         <span class="eyebrow"><span class="rivet"></span>Book Two · Coming Soon</span>
-                        <h3>What Eleanor freed did not leave when the truth came out.</h3>
-                        <p>A year after the locket's secret finally came to light, Eleanor believed the house — and her
-                            family — could begin to heal. Instead, the shadows have only grown longer. Objects move. Old
-                            names resurface in new handwriting. And a second locket appears, identical to the first,
-                            holding a photograph of someone who hasn't been born yet.</p>
-                        <p>In <em>The Shadows in the Locket</em>, Cheryl Mills pulls the series deeper into the
-                            supernatural, following Eleanor as she confronts the possibility that some inheritances
-                            don't end with the dead — they simply wait for the next person willing to carry them.</p>
+                        <h3>Some secrets should stay buried. Some voices should never be trusted.</h3>
+                        <p>Twenty-five years after the events of <em>The Secret Locket</em>, the mysterious silver
+                            locket has resurfaced.</p>
+                        <p>When Cambridge archivist Eliza Whitcomb discovers the forgotten relic hidden deep within an
+                            antiquarian archive, she awakens something that has waited centuries to be heard. At first,
+                            the voices seem impossible to resist, offering comfort, forgotten memories, and the chance
+                            to speak to those she has lost. But every answer comes at a price.</p>
+                        <p>As Eliza uncovers a chilling trail stretching back through generations, she discovers the
+                            locket has touched countless lives, leaving heartbreak, obsession, and death in its wake.
+                            The more she listens, the harder it becomes to tell truth from deception, memory from
+                            manipulation. Because the locket doesn't simply speak. It learns.</p>
+                        <p>Now Eliza must unravel the dark history bound within the silver before it claims her as it
+                            has so many before. But some shadows don't want to be exposed… and some are waiting to be
+                            set free.</p>
                         <div class="retail-row">
                             <span class="retail-btn is-disabled">Coming Soon</span>
                         </div>
@@ -1336,7 +1537,7 @@
             </div>
         </section>
 
-        <div class="hinge-seam"></div>
+        <div class="hinge-seam"><span class="seal">III</span></div>
 
         <!-- ============ SERVICES ============ -->
         <section id="services" class="grain on-light">
@@ -1359,6 +1560,7 @@
                         <h3>Manuscript Assessments</h3>
                         <p>A thorough, honest read of your full manuscript, with a detailed editorial letter on
                             structure, pacing, character, and where the suspense is working — or isn't yet.</p>
+                        <p class="price">From £180<span>Full manuscript, up to 100,000 words</span></p>
                     </div>
                     <div class="field-note">
                         <div class="service-icon">
@@ -1372,6 +1574,7 @@
                         <h3>Developmental Editing</h3>
                         <p>Hands-on, chapter-by-chapter collaboration for writers reshaping a draft — untangling
                             timelines, sharpening reveals, and deepening atmosphere without losing clarity.</p>
+                        <p class="price">From £750<span>Scales with manuscript length and depth of notes</span></p>
                     </div>
                     <div class="field-note">
                         <div class="service-icon">
@@ -1385,12 +1588,31 @@
                         <h3>Author Visits &amp; Speaking</h3>
                         <p>Book clubs, festivals, and libraries — Cheryl speaks on gothic suspense, blending the
                             supernatural with psychological crime, and researching real haunted history for fiction.</p>
+                        <p class="price">From £150 per session<span>Travel charged separately outside the local
+                                area</span></p>
+                    </div>
+                    <div class="field-note">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.5 4.5C15.5 4.8 9 7.5 6.5 15.5C6 17 5.3 18.6 4.3 19.7" stroke-width="1.4"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M19.5 4.5C19.5 4.5 20.2 9.8 15.3 13.6C12.7 15.6 9 16.2 9 16.2"
+                                    stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4.3 19.7L9 16.2" stroke-width="1.4" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <h3>Ghost Writing</h3>
+                        <p>Full-length ghost writing for clients with a story to tell but not the time or craft to
+                            write it alone — a close, collaborative process that keeps the finished book sounding like
+                            you.</p>
+                        <p class="price">From £4,500<span>Full-length novel, final quote after a project
+                                consultation</span></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="hinge-seam on-light"></div>
+        <div class="hinge-seam on-light"><span class="seal">IV</span></div>
 
         <!-- ============ CONTACT ============ -->
         <section id="contact">
