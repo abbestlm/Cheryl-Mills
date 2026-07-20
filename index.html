@@ -1642,9 +1642,8 @@
                         Speaking, festivals &amp; media enquiries welcome
                     </div>
                 </div>
-
-                <form class="contact-form" id="contact-form">
-                    <div class="form-row">
+<form class="contact-form" action="https://formspree.io/f/xnjevgze" method="POST"> 
+    <div class="form-row">
                         <div class="field">
                             <label for="fullname">Full Name</label>
                             <input type="text" id="fullname" name="fullname" placeholder="Jane Doe" required>
@@ -1700,18 +1699,50 @@
             });
 
             var form = document.getElementById('contact-form');
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                var button = form.querySelector('button[type="submit"]');
-                var originalText = button.textContent;
-                button.textContent = 'Message Sent';
-                button.style.background = '#9c3140';
-                setTimeout(function () {
-                    button.textContent = originalText;
-                    button.style.background = '';
-                    form.reset();
-                }, 2600);
-            });
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault(); // Prevents the page from reloading
+  
+  var button = form.querySelector('button[type="submit"]');
+  var originalText = button.textContent;
+  
+  // Prepare form data to send to Formspree
+  var data = new FormData(form);
+  
+  button.textContent = 'Sending...';
+  button.disabled = true;
+
+  fetch(form.action, {
+    method: form.method,
+    body: data,
+    headers: {
+        'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      button.textContent = 'Message Sent';
+      button.style.background = '#9c3140';
+      form.reset();
+    } else {
+      button.textContent = 'Error!';
+      button.style.background = 'red';
+    }
+    setTimeout(function () {
+      button.textContent = originalText;
+      button.style.background = '';
+      button.disabled = false;
+    }, 2600);
+  }).catch(error => {
+    button.textContent = 'Error!';
+    button.style.background = 'red';
+    setTimeout(function () {
+      button.textContent = originalText;
+      button.style.background = '';
+      button.disabled = false;
+    }, 2600);
+  });
+});
+
         })();
     </script>
 
