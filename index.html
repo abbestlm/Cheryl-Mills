@@ -937,6 +937,97 @@
             margin-bottom: 6px;
         }
 
+        /* ============ STORIES (dark chapter) ============ */
+        #stories {
+            background:
+                radial-gradient(ellipse 130% 85% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.4) 100%),
+                var(--void-deep);
+            padding: 130px 0;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 260px));
+            gap: 44px 40px;
+            justify-content: start;
+        }
+
+        .story-card {
+            display: block;
+            text-align: center;
+        }
+
+        .story-cover {
+            position: relative;
+            aspect-ratio: 2 / 3;
+            overflow: hidden;
+            border-radius: 2px;
+            border: 1px solid rgba(233, 225, 208, 0.1);
+            background: linear-gradient(160deg, #241418 0%, var(--void-deep) 80%);
+            box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .story-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-cover .read-hint {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 36px 12px 16px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--parchment);
+            background: linear-gradient(transparent, rgba(6, 5, 6, 0.92));
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .story-card:hover .story-cover,
+        .story-card:focus-visible .story-cover {
+            transform: translateY(-6px);
+            border-color: var(--brass-bright);
+            box-shadow: 0 40px 70px -28px rgba(0, 0, 0, 0.9);
+        }
+
+        .story-card:hover .read-hint,
+        .story-card:focus-visible .read-hint {
+            opacity: 1;
+            transform: none;
+        }
+
+        .story-card h3 {
+            margin-top: 20px;
+            font-size: 1.4rem;
+        }
+
+        .story-card .story-meta {
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            color: var(--brass-bright);
+        }
+
+        @media (hover: none) {
+            .story-cover .read-hint {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .story-grid {
+                justify-content: center;
+            }
+        }
+
         /* ============ SERVICES (light chapter) ============ */
         #services {
             background: var(--parchment);
@@ -1276,17 +1367,13 @@
     <header class="site-header" id="site-header">
         <nav class="wrap nav-inner">
             <a href="#home" class="logo">
-                <svg class="mark" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 1.5V4.5" stroke-width="1.2" stroke-linecap="round" />
-                    <ellipse cx="9" cy="13" rx="7" ry="8" stroke-width="1.2" />
-                    <path d="M9 9V13L11 15" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
                 Cheryl Mills
             </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Me</a></li>
                 <li><a href="#books">My Books</a></li>
+                <li><a href="#stories">Stories</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -1539,6 +1626,30 @@
 
         <div class="hinge-seam"><span class="seal">III</span></div>
 
+        <!-- ============ STORIES ============ -->
+        <section id="stories">
+            <div class="wrap">
+                <div class="section-head">
+                    <span class="eyebrow"><span class="rivet"></span>Short Fiction</span>
+                    <h2>Stories to read in the dark.</h2>
+                    <p>Standalone tales from beyond the Chronicles. Choose a cover to read the story as a PDF.</p>
+                </div>
+
+                <div class="story-grid">
+                    <a class="story-card" href="blood-runes.pdf" target="_blank" rel="noopener"
+                        aria-label="Read Blood Runes (PDF)">
+                        <div class="story-cover">
+                            <img src="blood-runes-cover.png" alt="Blood Runes story cover" loading="lazy">
+                            <span class="read-hint">Read Story</span>
+                        </div>
+                        <h3>Blood Runes</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="hinge-seam"><span class="seal">IV</span></div>
+
         <!-- ============ SERVICES ============ -->
         <section id="services" class="grain on-light">
             <div class="wrap">
@@ -1612,7 +1723,7 @@
             </div>
         </section>
 
-        <div class="hinge-seam on-light"><span class="seal">IV</span></div>
+        <div class="hinge-seam on-light"><span class="seal">V</span></div>
 
         <!-- ============ CONTACT ============ -->
         <section id="contact">
@@ -1630,7 +1741,7 @@
                             <path d="M3.5 6.5L12 13L20.5 6.5" stroke-width="1.4" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                           info@cherylmills.online
+                        info@cherylmills.online
                     </div>
                     <div class="contact-detail">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1642,8 +1753,8 @@
                         Speaking, festivals &amp; media enquiries welcome
                     </div>
                 </div>
-<form class="contact-form" action="https://formspree.io/f/xnjevgze" method="POST"> 
-    <div class="form-row">
+                <form class="contact-form" action="https://formspree.io/f/xnjevgze" method="POST">
+                    <div class="form-row">
                         <div class="field">
                             <label for="fullname">Full Name</label>
                             <input type="text" id="fullname" name="fullname" placeholder="Jane Doe" required>
@@ -1668,11 +1779,6 @@
     </main>
 
     <footer class="site-footer">
-        <svg class="mark" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 1.5V4.5" stroke-width="1.2" stroke-linecap="round" />
-            <ellipse cx="9" cy="13" rx="7" ry="8" stroke-width="1.2" />
-            <path d="M9 9V13L11 15" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
         <p>&copy; 2026 <strong>Cheryl Mills</strong>. All rights reserved.</p>
     </footer>
 
@@ -1700,48 +1806,48 @@
 
             var form = document.getElementById('contact-form');
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault(); // Prevents the page from reloading
-  
-  var button = form.querySelector('button[type="submit"]');
-  var originalText = button.textContent;
-  
-  // Prepare form data to send to Formspree
-  var data = new FormData(form);
-  
-  button.textContent = 'Sending...';
-  button.disabled = true;
+            form.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevents the page from reloading
 
-  fetch(form.action, {
-    method: form.method,
-    body: data,
-    headers: {
-        'Accept': 'application/json'
-    }
-  }).then(response => {
-    if (response.ok) {
-      button.textContent = 'Message Sent';
-      button.style.background = '#9c3140';
-      form.reset();
-    } else {
-      button.textContent = 'Error!';
-      button.style.background = 'red';
-    }
-    setTimeout(function () {
-      button.textContent = originalText;
-      button.style.background = '';
-      button.disabled = false;
-    }, 2600);
-  }).catch(error => {
-    button.textContent = 'Error!';
-    button.style.background = 'red';
-    setTimeout(function () {
-      button.textContent = originalText;
-      button.style.background = '';
-      button.disabled = false;
-    }, 2600);
-  });
-});
+                var button = form.querySelector('button[type="submit"]');
+                var originalText = button.textContent;
+
+                // Prepare form data to send to Formspree
+                var data = new FormData(form);
+
+                button.textContent = 'Sending...';
+                button.disabled = true;
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        button.textContent = 'Message Sent';
+                        button.style.background = '#9c3140';
+                        form.reset();
+                    } else {
+                        button.textContent = 'Error!';
+                        button.style.background = 'red';
+                    }
+                    setTimeout(function () {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                        button.disabled = false;
+                    }, 2600);
+                }).catch(error => {
+                    button.textContent = 'Error!';
+                    button.style.background = 'red';
+                    setTimeout(function () {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                        button.disabled = false;
+                    }, 2600);
+                });
+            });
 
         })();
     </script>
